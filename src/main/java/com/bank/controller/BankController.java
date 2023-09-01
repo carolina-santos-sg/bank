@@ -12,19 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class BankController {
 
 //    @Autowired
-//    private AssociateRepository ar;
-//
-//    @Autowired
 //    private BankRepository br;
-//
-//    @Autowired
-//    private BankAccountRepository bacr;
-//
-//    @Autowired
-//    private BankAgencyRepository bagr;
-//
-//    @Autowired
-//    private TransactionsRepository tr;
 
-
+    
 }
