@@ -19,6 +19,6 @@ public interface BankRepository extends JpaRepository<Bank, Long>{
              value = "SELECT COUNT(*) > 0 " +
                      "FROM bank b " +
                      "WHERE b.bank_number = :bankNumber ")
-public boolean countBankByNumber(@Param("bankNumber") long bankNumber);
+    public boolean countBankByNumber(@Param("bankNumber") long bankNumber);
 
 }

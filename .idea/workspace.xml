@@ -5,16 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="32b0e422-53d7-4b4b-8dc9-abcdabf766f9" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/bank/service/AssociateService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/bank/service/BankService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/bank/controller/AssociatesController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/bank/controller/AssociatesController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/bank/controller/BankController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/bank/controller/BankController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/bank/model/Associates.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/bank/model/Associates.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/bank/repository/AssociateRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/bank/repository/AssociateRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/bank/controller/BankAgencyController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/bank/controller/BankAgencyController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/bank/repository/BankRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/bank/repository/BankRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/bank/repository/TransactionsRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/bank/repository/TransactionsRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/bank/service/BankAgencyService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/bank/service/BankAgencyService.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -97,7 +91,7 @@
       <workItem from="1693417929203" duration="1000" />
       <workItem from="1693418829690" duration="8970000" />
       <workItem from="1693481735898" duration="3306000" />
-      <workItem from="1693566483070" duration="24034000" />
+      <workItem from="1693566483070" duration="25621000" />
     </task>
     <servers />
   </component>

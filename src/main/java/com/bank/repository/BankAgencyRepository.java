@@ -11,4 +11,10 @@ public interface BankAgencyRepository extends JpaRepository<BankAgency, Long> {
                          "FROM  bank_agency ba " +
                          "WHERE ba.id = :id")
     public boolean countByAgencyNumber(@Param("id") long id);
+
+    @Query(nativeQuery = true,
+            value = "SELECT COUNT(*) > 0 " +
+                    "FROM bank_agency ba " +
+                    "WHERE ba.bank_number = :bankNumber")
+    public boolean countByBankNumber(@Param("bankNumber") long bankNumber);
 }
