@@ -4,6 +4,7 @@ import com.bank.model.Bank;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Repository;
 
 @Repository
@@ -19,6 +20,5 @@ public interface BankRepository extends JpaRepository<Bank, Long>{
                      "FROM bank b " +
                      "WHERE b.bank_number = :bankNumber ")
 public boolean countBankByNumber(@Param("bankNumber") long bankNumber);
-
 
 }

@@ -10,13 +10,13 @@ import org.springframework.stereotype.Repository;
 public interface AssociateRepository extends JpaRepository<Associates, Long>{
     @Query (nativeQuery = true,
                   value = "SELECT COUNT(*) > 0 " +
-                          "FROM associate a " +
+                          "FROM associates a " +
                           "WHERE a.document_number = :documentNumber")
-    public boolean countByDocumentoNumber(@Param("documentNumber") long documentNumber);
+    public boolean countByDocumentNumber(@Param("documentNumber") long documentNumber);
 
-     @Query (nativeQuery = true,
-                  value = "SELECT COUNT(*) > 0 " +
-                          "FROM associate a " +
-                          "WHERE a.associate_id = :id")
-    public boolean countByAssociateId(@Param("id") long id);
+//     @Query (nativeQuery = true,
+//                  value = "SELECT COUNT(*) > 0 " +
+//                          "FROM associates a " +
+//                          "WHERE a.associate_id = :id")
+//    public boolean countByAssociateId(@Param("id") long id);
 }

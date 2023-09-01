@@ -22,7 +22,7 @@ public class Associates {
     private long   phoneNumber;
 
     @Column(name = "document_number")
-    private long   documentoNumber;
+    private long   documentNumber;
 
     @Column(name = "salary")
     private BigDecimal salary = new BigDecimal("0");
