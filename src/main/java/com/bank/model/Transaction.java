@@ -22,12 +22,16 @@ public class Transaction {
     @Column(name = "value")
     private BigDecimal value = new BigDecimal("0");
 
+    //*******************
     @Column(name = "date")
     private Date data;
+    //*********************
 
-    @Column(name = "source_account")
-    private long sourceAccount;
+    @JoinColumn(name = "source_account")
+    @ManyToOne
+    private BankAccount sourceAccountId;
 
-    @Column(name = "target_account")
-    private long targetAccount;
+    @JoinColumn(name = "target_account")
+    @ManyToOne
+    private BankAccount targetAccountId;
 }

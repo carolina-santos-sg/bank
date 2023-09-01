@@ -16,11 +16,4 @@ public class Bank {
     @Column(name = "bank_name")
     private String bankName;
 
-//    @JoinColumn(name = "agency_number")
-//    @OneToMany
-//    private long agencyNumber;
-
-//    @JoinColumn(name = "bank_account")
-//    @ManyToOne
-//    private long bankAccount;
 }

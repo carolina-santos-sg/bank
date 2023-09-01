@@ -14,9 +14,10 @@ public class BankAgency {
     private long id;
 
     @Column(name = "number_agency")
-    private long numberAgency;
+    private long agencyNumber;
 
-//    @JoinColumn(name = "bank_number")
-//    @ManyToOne
-//    private long bankNumber;
+    @JoinColumn(name = "bank_number")
+    @ManyToOne
+    private Bank bankNumber;
+
 }

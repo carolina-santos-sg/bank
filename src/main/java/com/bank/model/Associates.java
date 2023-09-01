@@ -26,6 +26,4 @@ public class Associates {
 
     @Column(name = "salary")
     private BigDecimal salary = new BigDecimal("0");
-
-
 }
