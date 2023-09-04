@@ -1,6 +1,7 @@
 package com.bank.service;
 
 import com.bank.model.Associate;
+import com.bank.model.BankAgency;
 import com.bank.repository.AssociateRepository;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.http.HttpStatus;
@@ -35,7 +36,10 @@ public class AssociateService {
         }
     }
 
-    public boolean findAllById(long id){
-        return associateRepository.findById(id);
+    public Associate findAssociateById(long id){
+
+        return this.associateRepository.findById(id).orElseThrow( () -> {
+            return new RuntimeException("Agency não encontrado!");
+        });
     }
 }

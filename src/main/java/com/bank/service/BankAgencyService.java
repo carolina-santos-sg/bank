@@ -51,7 +51,7 @@ public class BankAgencyService {
     }
 
     public BankAgency findAgencyById(long id){
-        return agencyRepository.findById(id).orElseThrow(() -> {
+        return this.agencyRepository.findById(id).orElseThrow(() -> {
             return new RuntimeException("Agency não encontrado!");
         });
     }

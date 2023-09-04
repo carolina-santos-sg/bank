@@ -1,9 +1,7 @@
 package com.bank.service;
 
 import com.bank.dto.BankAccountDto;
-import com.bank.model.Associate;
 import com.bank.model.BankAccount;
-import com.bank.model.BankAgency;
 import com.bank.repository.BankAccountRepository;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -15,15 +13,14 @@ import java.util.Objects;
 @Service
 public class BankAccountService {
     final BankAccountRepository bankAccountRepository;
-//    final BankAccountDto bankAccountDto;
     final AssociateService associateService;
-    private BankAgency bankAgencyService;
+    final BankAgencyService bankAgencyService;
 
 
-    public BankAccountService(BankAccountRepository bankAccountRepository,  AssociateService associateService) {
+    public BankAccountService(BankAccountRepository bankAccountRepository, AssociateService associateService, BankAgencyService bankAgencyService) {
         this.bankAccountRepository = bankAccountRepository;
-//        this.bankAccountDto = bankAccountDto;
         this.associateService = associateService;
+        this.bankAgencyService = bankAgencyService;
     }
 
     //@Transactional
@@ -41,8 +38,8 @@ public class BankAccountService {
         bankAccount.setNumberAccount(bankAccountDto.getNumberAccount());
         bankAccount.setBalance(bankAccountDto.getBalance());
         bankAccount.setTransactionLimit(bankAccountDto.getTransactionLimit());
-//        bankAccount.setAgencyId(bankAgencyService.findAgencyById());
-
+        bankAccount.setAgencyId(this.bankAgencyService.findAgencyById(bankAccount.getId()));
+        bankAccount.setAssociateId(this.associateService.findAssociateById(bankAccount.getAssociateId().getId()));
 
         return ResponseEntity.ok(bankAccountRepository.save(bankAccount));
     }

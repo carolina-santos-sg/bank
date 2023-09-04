@@ -26,7 +26,4 @@ public class Associate {
     @Column(name = "salary")
     private BigDecimal salary = new BigDecimal("0");
 
-    public Associate findAllById(long associateId) {
-        return null;
-    }
 }
