@@ -26,7 +26,7 @@ public class BankAccountService {
     //@Transactional
     public ResponseEntity<BankAccount> createAccount(@RequestBody BankAccountDto bankAccountDto){
         if (Objects.isNull(bankAccountDto.getAgencyId())){
-            throw new RuntimeException("Bank Number vazio!");
+            throw new RuntimeException("Bank Agency Number vazio!");
         }
 
 

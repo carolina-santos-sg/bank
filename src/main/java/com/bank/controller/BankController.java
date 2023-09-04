@@ -1,6 +1,8 @@
 package com.bank.controller;
 
 import com.bank.model.Bank;
+import com.bank.model.BankAgency;
+import com.bank.repository.BankRepository;
 import com.bank.service.BankService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -10,9 +12,11 @@ import org.springframework.web.bind.annotation.*;
 public class BankController {
 
     private final BankService bankService;
+    final BankRepository bankRepository;
 
-    public BankController(BankService bankService) {
+    public BankController(BankService bankService, BankRepository bankRepository) {
         this.bankService = bankService;
+        this.bankRepository = bankRepository;
     }
 
     @PostMapping("/registerBank")
@@ -25,9 +29,13 @@ public class BankController {
         return ResponseEntity.ok(this.bankService.listBank());
     }
 
-    //    @GetMapping("/{id}")
-//    public ResponseEntity<Object> searchBank(long id){
-//        return ResponseEntity.ok(this.bankService.searchBank(id));
-//    }
+    @DeleteMapping("/deleteBank")
+    public void deleteBank(@RequestBody Bank bank){
+        bankRepository.delete(bank);
+    }
 
+    @PutMapping("/updateBank")
+    public Bank updateBank(@RequestBody Bank bank){
+        return bankRepository.save(bank);
+    }
 }

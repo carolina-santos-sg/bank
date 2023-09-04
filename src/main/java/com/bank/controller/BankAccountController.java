@@ -1,6 +1,8 @@
 package com.bank.controller;
 
 import com.bank.dto.BankAccountDto;
+import com.bank.model.BankAccount;
+import com.bank.repository.BankAccountRepository;
 import com.bank.service.BankAccountService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -9,11 +11,11 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/")
 public class BankAccountController {
     private final BankAccountService bankAccountService;
-//    private final BankAccountDto bankAccountDto;
+    final BankAccountRepository bankAccountRepository;
 
-    public BankAccountController(BankAccountService bankAccountService) {
+    public BankAccountController(BankAccountService bankAccountService, BankAccountRepository bankAccountRepository) {
         this.bankAccountService = bankAccountService;
-//        this.bankAccountDto = bankAccountDto;
+        this.bankAccountRepository = bankAccountRepository;
     }
 
     @PostMapping("/createAccount")
@@ -26,4 +28,8 @@ public class BankAccountController {
         return ResponseEntity.ok(this.bankAccountService.listAccount());
     }
 
+    @DeleteMapping("/deleteAccount")
+    public void deleteAccount(@RequestBody BankAccount bankAccount){
+        bankAccountRepository.delete(bankAccount);
+    }
 }
