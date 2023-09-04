@@ -45,4 +45,10 @@ public class BankService {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"Banco já registrado!");
         }
     }
+
+    public Bank findBankById(long id){
+        return bankRepository.findById(id).orElseThrow(() -> {
+            return new RuntimeException("Bank não encontrado!");
+        });
+    }
 }

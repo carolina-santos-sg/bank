@@ -1,7 +1,9 @@
 package com.bank.controller;
 
+import com.bank.dto.BankAgencyDto;
 import com.bank.model.BankAgency;
 import com.bank.service.BankAgencyService;
+import lombok.NoArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -10,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 public class BankAgencyController {
 
     final BankAgencyService agencyService;
+    final BankAgencyDto bankAgencyDto = null;
 
     public BankAgencyController(BankAgencyService agencyService) {
         this.agencyService = agencyService;
@@ -21,7 +24,7 @@ public class BankAgencyController {
     }
 
     @PostMapping("/registerAgency")
-    public ResponseEntity<Object> registerAgency(@RequestBody BankAgency bankAgency){
-        return ResponseEntity.ok(this.agencyService.registerAgency(bankAgency));
+    public ResponseEntity<Object> registerAgency(@RequestBody BankAgencyDto bankAgencyDto){
+        return ResponseEntity.ok(this.agencyService.registerAgency(bankAgencyDto));
     }
 }

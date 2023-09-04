@@ -8,8 +8,7 @@ import java.math.BigDecimal;
 @Entity
 @Data
 @Table(name = "associates")
-public class Associates {
-
+public class Associate {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "associate_id")
@@ -26,4 +25,8 @@ public class Associates {
 
     @Column(name = "salary")
     private BigDecimal salary = new BigDecimal("0");
+
+    public Associate findAllById(long associateId) {
+        return null;
+    }
 }

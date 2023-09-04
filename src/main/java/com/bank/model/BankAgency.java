@@ -1,11 +1,14 @@
 package com.bank.model;
 
 import lombok.Data;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
 @Entity
 @Data   //cria implicitamente getters e setters dos atributos da classe
+@NoArgsConstructor
 @Table(name = "bank_agency")
 public class BankAgency {
     @Id
@@ -16,8 +19,9 @@ public class BankAgency {
     @Column(name = "number_agency")
     private long agencyNumber;
 
+
+    @Getter
     @JoinColumn(name = "bank_number")
     @ManyToOne
     private Bank bankNumber;
-
 }

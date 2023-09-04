@@ -27,9 +27,11 @@ public class BankAccount {
 
     @JoinColumn(name = "agency_id")
     @OneToOne
-    private BankAgency agencyNumber;
+    private BankAgency agencyId;
 
     @JoinColumn(name = "associate_id")
     @ManyToOne
-    private Associates associateId;
+    private Associate associateId;
+
+
 }

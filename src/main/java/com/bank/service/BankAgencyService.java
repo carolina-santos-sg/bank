@@ -1,40 +1,58 @@
 package com.bank.service;
 
-import com.bank.model.Bank;
+
+import com.bank.dto.BankAgencyDto;
 import com.bank.model.BankAgency;
 import com.bank.repository.BankAgencyRepository;
+import com.bank.repository.BankRepository;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestBody;
 
-import java.util.ResourceBundle;
+import java.util.Objects;
 
 @Service
 public class BankAgencyService {
     final                                   //instanciando
     BankAgencyRepository agencyRepository;
+    final BankRepository bankRepository;
+    final BankService bankService;
 
     //construction
-    public BankAgencyService(BankAgencyRepository agencyRepository) {
+    public BankAgencyService(BankAgencyRepository agencyRepository, BankRepository bankRepository, BankService bankService) {
         this.agencyRepository = agencyRepository;
+        this.bankRepository = bankRepository;
+        this.bankService = bankService;
     }
 
     public ResponseEntity<Object> listAgency(){
         return ResponseEntity.ok(this.agencyRepository.findAll());
     }
 
-    @Transactional
-    public BankAgency registerAgency(@RequestBody BankAgency bankAgency){
-        this.existsAgency(bankAgency);
-        return agencyRepository.save(bankAgency);
-    }
-
-    private void existsAgency(BankAgency bankAgency){
-        if (this.agencyRepository.countByAgencyNumber(bankAgency.getAgencyNumber()) &&
-            this.agencyRepository.countByBankNumber(bankAgency.getBankNumber().getBankNumber())){
-
+    //@Transactional
+    public ResponseEntity<BankAgency> registerAgency(@RequestBody BankAgencyDto bankAgencyDto){
+        if (Objects.isNull(bankAgencyDto.getBankNumber())){
+            throw new RuntimeException("Bank Number vazio!");
         }
+
+        if (!this.bankRepository.countBankByNumber(bankAgencyDto.getBankNumber())){
+            throw new RuntimeException("Bank não existe!");
+        }
+
+        if (this.agencyRepository.countAgencyAndBankByNumber(bankAgencyDto.getAgencyNumber(), bankAgencyDto.getBankNumber())){
+           throw new RuntimeException("Bank Agency já registrada!");
+        }
+
+        BankAgency bankAgency = new BankAgency();
+        bankAgency.setAgencyNumber(bankAgencyDto.getAgencyNumber());
+        bankAgency.setBankNumber(this.bankService.findBankById(bankAgencyDto.getBankNumber()));
+
+        return ResponseEntity.ok(agencyRepository.save(bankAgency));
     }
 
+    public BankAgency findAgencyById(long id){
+        return agencyRepository.findById(id).orElseThrow(() -> {
+            return new RuntimeException("Agency não encontrado!");
+        });
+    }
 }
