@@ -6,11 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="32b0e422-53d7-4b4b-8dc9-abcdabf766f9" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/bank/controller/AssociateController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/bank/controller/AssociateController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/bank/controller/BankAccountController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/bank/controller/BankAccountController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/bank/controller/BankAgencyController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/bank/controller/BankAgencyController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/bank/controller/BankController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/bank/controller/BankController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/bank/service/BankAccountService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/bank/service/BankAccountService.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -100,7 +96,7 @@
       <workItem from="1693481735898" duration="3306000" />
       <workItem from="1693566483070" duration="26703000" />
       <workItem from="1693823982674" duration="15408000" />
-      <workItem from="1693846382346" duration="8963000" />
+      <workItem from="1693846382346" duration="10775000" />
     </task>
     <servers />
   </component>

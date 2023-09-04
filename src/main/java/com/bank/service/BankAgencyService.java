@@ -55,4 +55,14 @@ public class BankAgencyService {
             return new RuntimeException("Agency não encontrado!");
         });
     }
+
+    public BankAgency updateAgency(long id, BankAgency bankAgency){
+        BankAgency agency = this.agencyRepository.findById(id).orElseThrow(() -> {
+            return new RuntimeException("Agência não encontrada!");
+        });
+        agency.setAgencyNumber(bankAgency.getAgencyNumber());
+        agency.setBankNumber(bankAgency.getBankNumber());
+
+        return this.agencyRepository.save(agency);
+    }
 }

@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.*;
 public class BankAgencyController {
 
     final BankAgencyService agencyService;
-    final BankAgencyDto bankAgencyDto = null;
     final BankAgencyRepository bankAgencyRepository;
 
     public BankAgencyController(BankAgencyService agencyService, BankAgencyRepository bankAgencyRepository) {
@@ -35,8 +34,8 @@ public class BankAgencyController {
         bankAgencyRepository.delete(bankAgency);
     }
 
-    @PutMapping("/updateAgency")
-    public BankAgency updateAgency(@RequestBody BankAgency bankAgency){
-        return bankAgencyRepository.save(bankAgency);
+    @PutMapping("/updateAgency/{id}")
+    public BankAgency updateAgency(@PathVariable("id") long id, @RequestBody BankAgency bankAgency){
+        return agencyService.updateAgency(id, bankAgency);
     }
 }
