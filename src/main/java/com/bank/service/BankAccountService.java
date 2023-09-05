@@ -51,6 +51,10 @@ public class BankAccountService {
     }
 
     public ResponseEntity<Object> updateAccount(long id, BankAccountDto bankAccountDto){
+        if (Objects.isNull(id)){
+            throw new RuntimeException("É preciso informar um bankAccount!");
+        }
+
         BankAccount bankAccount = this.bankAccountRepository.findById(id).orElseThrow(() -> {
             return new RuntimeException("Account não encontrada!");
         });

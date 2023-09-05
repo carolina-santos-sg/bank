@@ -12,6 +12,8 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.Objects;
+
 @Service
 public class AssociateService {
     final
@@ -33,7 +35,10 @@ public class AssociateService {
         return ResponseEntity.ok(this.associateRepository.findAll());
     }
 
-    public void existsAssociate(@NotNull Associate associate){
+    public void existsAssociate(Associate associate){
+        if (Objects.isNull(associate.getId())){
+            throw new RuntimeException("É preciso informar um associado!");
+        }
         if (this.associateRepository.countByDocumentNumber(associate.getDocumentNumber())){
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Associado já cadastrado!");
         }

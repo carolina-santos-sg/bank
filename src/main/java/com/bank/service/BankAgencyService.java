@@ -57,8 +57,8 @@ public class BankAgencyService {
     }
 
     public ResponseEntity<Object> updateAgency(long id, BankAgencyDto bankAgencyDto){
-        if (this.agencyRepository.countAgencyAndBankByNumber(bankAgencyDto.getAgencyNumber(), bankAgencyDto.getBankNumber())){
-            throw new RuntimeException("Agência não encontrada!");
+        if (Objects.isNull(id)){
+            throw new RuntimeException("É preciso informar um bankAgency!");
         }
 
         BankAgency agency = this.agencyRepository.findById(id).orElseThrow(() -> {

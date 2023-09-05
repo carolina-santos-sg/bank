@@ -19,8 +19,6 @@ public class BankAgency {
     @Column(name = "number_agency")
     private long agencyNumber;
 
-
-    @Getter
     @JoinColumn(name = "bank_number")
     @ManyToOne
     private Bank bankNumber;

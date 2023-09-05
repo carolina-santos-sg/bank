@@ -34,10 +34,7 @@ public class BankService {
     public ResponseEntity<Object> listBank(){
         return ResponseEntity.ok(bankRepository.findAll());
     }
-
-//    public ResponseEntity<Object> searchBank(@PathVariable("id") long id){
-//        return ResponseEntity.ok(bankRepository.findAllById(id));
-//    }
+    
 
     private void existsBank(@NotNull Bank bank){
         if (this.bankRepository.countBankByName(bank.getBankName()) ||
