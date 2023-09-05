@@ -4,6 +4,7 @@ import lombok.Data;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
+import java.util.List;
 
 
 @Entity
@@ -33,5 +34,6 @@ public class BankAccount {
     @ManyToOne
     private Associate associateId;
 
-
+//    @OneToOne
+//    List<BankAgency> bankAgencies;
 }

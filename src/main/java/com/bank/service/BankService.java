@@ -34,7 +34,7 @@ public class BankService {
     public ResponseEntity<Object> listBank(){
         return ResponseEntity.ok(bankRepository.findAll());
     }
-    
+
 
     private void existsBank(@NotNull Bank bank){
         if (this.bankRepository.countBankByName(bank.getBankName()) ||

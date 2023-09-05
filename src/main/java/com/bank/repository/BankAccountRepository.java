@@ -1,6 +1,8 @@
 package com.bank.repository;
 
+import com.bank.model.Bank;
 import com.bank.model.BankAccount;
+import com.bank.model.BankAgency;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;

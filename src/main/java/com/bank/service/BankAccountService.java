@@ -1,7 +1,6 @@
 package com.bank.service;
 
 import com.bank.dto.BankAccountDto;
-import com.bank.dto.BankAgencyDto;
 import com.bank.model.BankAccount;
 import com.bank.model.BankAgency;
 import com.bank.repository.BankAccountRepository;
@@ -36,6 +35,7 @@ public class BankAccountService {
             throw new RuntimeException("Bank Account já registrada!");
         }
 
+
         BankAccount bankAccount = new BankAccount();
         bankAccount.setNumberAccount(bankAccountDto.getNumberAccount());
         bankAccount.setBalance(bankAccountDto.getBalance());
@@ -55,16 +55,19 @@ public class BankAccountService {
             throw new RuntimeException("É preciso informar um bankAccount!");
         }
 
+        if (this.bankAccountRepository.countByNumberAccountAndNumberAgency(bankAccountDto.getNumberAccount(), bankAccountDto.getAgencyId())){
+            throw new RuntimeException("Bank Account já registrada!");
+        }
+
         BankAccount bankAccount = this.bankAccountRepository.findById(id).orElseThrow(() -> {
             return new RuntimeException("Account não encontrada!");
         });
 
         bankAccount.setNumberAccount(bankAccountDto.getNumberAccount());
-        bankAccount.setBalance(bankAccountDto.getBalance());
-        bankAccount.setTransactionLimit(bankAccountDto.getTransactionLimit());
         bankAccount.setAgencyId(this.associateService.findAgencyById(bankAccountDto.getAgencyId()));
         bankAccount.setAssociateId(this.associateService.findAssociateById(bankAccountDto.getAssociateId()));
 
         return ResponseEntity.ok(bankAccountRepository.save(bankAccount));
     }
+
 }

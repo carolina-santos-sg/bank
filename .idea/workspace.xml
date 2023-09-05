@@ -5,9 +5,15 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="32b0e422-53d7-4b4b-8dc9-abcdabf766f9" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/bank/service/AssociateService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/bank/service/AssociateService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/bank/controller/AssociateController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/bank/controller/AssociateController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/bank/model/Bank.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/bank/model/Bank.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/bank/model/BankAccount.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/bank/model/BankAccount.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/bank/model/BankAgency.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/bank/model/BankAgency.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/bank/repository/AssociateRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/bank/repository/AssociateRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/bank/repository/BankAccountRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/bank/repository/BankAccountRepository.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/bank/service/BankAccountService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/bank/service/BankAccountService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/bank/service/BankAgencyService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/bank/service/BankAgencyService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/bank/service/BankService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/bank/service/BankService.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -98,7 +104,7 @@
       <workItem from="1693566483070" duration="26703000" />
       <workItem from="1693823982674" duration="15408000" />
       <workItem from="1693846382346" duration="11364000" />
-      <workItem from="1693911853930" duration="12188000" />
+      <workItem from="1693911853930" duration="22412000" />
     </task>
     <servers />
   </component>

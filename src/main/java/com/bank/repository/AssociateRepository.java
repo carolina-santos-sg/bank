@@ -14,6 +14,4 @@ public interface AssociateRepository extends JpaRepository<Associate, Long>{
                           "FROM associates a " +
                           "WHERE a.document_number = :documentNumber")
     boolean countByDocumentNumber(@Param("documentNumber") long documentNumber);
-
-
 }
