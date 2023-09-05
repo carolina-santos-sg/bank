@@ -1,7 +1,9 @@
 package com.bank.service;
 
 import com.bank.dto.BankAccountDto;
+import com.bank.dto.BankAgencyDto;
 import com.bank.model.BankAccount;
+import com.bank.model.BankAgency;
 import com.bank.repository.BankAccountRepository;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -38,13 +40,27 @@ public class BankAccountService {
         bankAccount.setNumberAccount(bankAccountDto.getNumberAccount());
         bankAccount.setBalance(bankAccountDto.getBalance());
         bankAccount.setTransactionLimit(bankAccountDto.getTransactionLimit());
-        bankAccount.setAgencyId(this.bankAgencyService.findAgencyById(bankAccount.getId()));
-        bankAccount.setAssociateId(this.associateService.findAssociateById(bankAccount.getAssociateId().getId()));
+        bankAccount.setAgencyId(this.bankAgencyService.findAgencyById(bankAccountDto.getAgencyId()));
+        bankAccount.setAssociateId(this.associateService.findAssociateById(bankAccountDto.getAssociateId()));
 
         return ResponseEntity.ok(bankAccountRepository.save(bankAccount));
     }
 
     public List<BankAccount> listAccount(){
         return bankAccountRepository.findAll();
+    }
+
+    public ResponseEntity<Object> updateAccount(long id, BankAccountDto bankAccountDto){
+        BankAccount bankAccount = this.bankAccountRepository.findById(id).orElseThrow(() -> {
+            return new RuntimeException("Account não encontrada!");
+        });
+
+        bankAccount.setNumberAccount(bankAccountDto.getNumberAccount());
+        bankAccount.setBalance(bankAccountDto.getBalance());
+        bankAccount.setTransactionLimit(bankAccountDto.getTransactionLimit());
+        bankAccount.setAgencyId(this.associateService.findAgencyById(bankAccountDto.getAgencyId()));
+        bankAccount.setAssociateId(this.associateService.findAssociateById(bankAccountDto.getAssociateId()));
+
+        return ResponseEntity.ok(bankAccountRepository.save(bankAccount));
     }
 }

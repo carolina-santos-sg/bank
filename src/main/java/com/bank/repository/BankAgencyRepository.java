@@ -25,5 +25,5 @@ public interface BankAgencyRepository extends JpaRepository<BankAgency, Long> {
                          " JOIN bank b ON b.bank_number = ba.bank_number " +
                          " WHERE ba.number_agency = :agencyNumber " +
                          " AND ba.bank_number = :bankNumber ")
-    boolean countAgencyAndBankByNumber(@Param("agencyNumber") long agencyNumber, @Param("bankNumber") long bankNumber);
+    boolean countAgencyAndBankByNumber(@Param("agencyNumber") Long agencyNumber, @Param("bankNumber") Long bankNumber);
 }

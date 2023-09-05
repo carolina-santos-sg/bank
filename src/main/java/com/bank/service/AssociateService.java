@@ -3,6 +3,7 @@ package com.bank.service;
 import com.bank.model.Associate;
 import com.bank.model.BankAgency;
 import com.bank.repository.AssociateRepository;
+import com.bank.repository.BankAgencyRepository;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,9 +16,11 @@ import org.springframework.web.server.ResponseStatusException;
 public class AssociateService {
     final
     AssociateRepository associateRepository;
+    final BankAgencyRepository bankAgencyRepository;
 
-    public AssociateService(AssociateRepository associateRepository) {
+    public AssociateService(AssociateRepository associateRepository, BankAgencyRepository bankAgencyRepository) {
         this.associateRepository = associateRepository;
+        this.bankAgencyRepository = bankAgencyRepository;
     }
 
     @Transactional
@@ -39,7 +42,14 @@ public class AssociateService {
     public Associate findAssociateById(long id){
 
         return this.associateRepository.findById(id).orElseThrow( () -> {
+            return new RuntimeException("Associate não encontrado!");
+        });
+    }
+    public BankAgency findAgencyById(long id){
+
+        return this.bankAgencyRepository.findById(id).orElseThrow( () -> {
             return new RuntimeException("Agency não encontrado!");
         });
     }
+
 }

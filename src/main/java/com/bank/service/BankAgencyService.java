@@ -50,19 +50,23 @@ public class BankAgencyService {
         return ResponseEntity.ok(agencyRepository.save(bankAgency));
     }
 
-    public BankAgency findAgencyById(long id){
+    public BankAgency findAgencyById(Long id){
         return this.agencyRepository.findById(id).orElseThrow(() -> {
             return new RuntimeException("Agency não encontrado!");
         });
     }
 
-    public BankAgency updateAgency(long id, BankAgency bankAgency){
+    public ResponseEntity<Object> updateAgency(long id, BankAgencyDto bankAgencyDto){
+        if (this.agencyRepository.countAgencyAndBankByNumber(bankAgencyDto.getAgencyNumber(), bankAgencyDto.getBankNumber())){
+            throw new RuntimeException("Agência não encontrada!");
+        }
+
         BankAgency agency = this.agencyRepository.findById(id).orElseThrow(() -> {
             return new RuntimeException("Agência não encontrada!");
         });
-        agency.setAgencyNumber(bankAgency.getAgencyNumber());
-        agency.setBankNumber(bankAgency.getBankNumber());
 
-        return this.agencyRepository.save(agency);
+        agency.setAgencyNumber(bankAgencyDto.getAgencyNumber());
+
+        return ResponseEntity.ok(this.agencyRepository.save(agency));
     }
 }

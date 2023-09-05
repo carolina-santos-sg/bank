@@ -32,4 +32,9 @@ public class BankAccountController {
     public void deleteAccount(@RequestBody BankAccount bankAccount){
         bankAccountRepository.delete(bankAccount);
     }
+
+    @PutMapping("/updateAccount/{id}")
+    public ResponseEntity<Object> updateAccount(@PathVariable("id") long id, @RequestBody BankAccountDto bankAccountDto){
+        return ResponseEntity.ok(bankAccountService.updateAccount(id, bankAccountDto));
+    }
 }

@@ -35,7 +35,7 @@ public class BankAgencyController {
     }
 
     @PutMapping("/updateAgency/{id}")
-    public BankAgency updateAgency(@PathVariable("id") long id, @RequestBody BankAgency bankAgency){
-        return agencyService.updateAgency(id, bankAgency);
+    public ResponseEntity<Object> updateAgency(@PathVariable("id") long id, @RequestBody BankAgencyDto bankAgencyDto){
+        return ResponseEntity.ok(agencyService.updateAgency(id, bankAgencyDto));
     }
 }
