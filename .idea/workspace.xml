@@ -5,13 +5,15 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="32b0e422-53d7-4b4b-8dc9-abcdabf766f9" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/bank/dto/TransactionDto.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/bank/enums/TransactionEnums.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/bank/dto/BankAccountDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/bank/dto/BankAccountDto.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/bank/model/BankAccount.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/bank/model/BankAccount.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/bank/model/BankAgency.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/bank/model/BankAgency.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/bank/controller/TransactionController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/bank/controller/TransactionController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/bank/model/Transaction.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/bank/model/Transaction.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/bank/repository/BankAccountRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/bank/repository/BankAccountRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/bank/repository/BankAgencyRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/bank/repository/BankAgencyRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/bank/service/BankAccountService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/bank/service/BankAccountService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/bank/repository/TransactionsRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/bank/repository/TransactionsRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/bank/service/TransactionService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/bank/service/TransactionService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.properties" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -103,7 +105,7 @@
       <workItem from="1693823982674" duration="15408000" />
       <workItem from="1693846382346" duration="11364000" />
       <workItem from="1693911853930" duration="22412000" />
-      <workItem from="1693996505362" duration="8019000" />
+      <workItem from="1693996505362" duration="23072000" />
     </task>
     <servers />
   </component>
