@@ -34,6 +34,4 @@ public class BankAccount {
     @ManyToOne
     private Associate associateId;
 
-//    @OneToOne
-//    List<BankAgency> bankAgencies;
 }

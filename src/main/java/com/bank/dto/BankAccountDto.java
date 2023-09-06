@@ -18,4 +18,6 @@ public class BankAccountDto {
     private Long agencyId;
 
     private Long associateId;
+
+    private Long bankNumber;
 }

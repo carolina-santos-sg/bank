@@ -1,9 +1,10 @@
 package com.bank.service;
 
 import com.bank.dto.BankAccountDto;
+import com.bank.dto.BankAgencyDto;
 import com.bank.model.BankAccount;
-import com.bank.model.BankAgency;
 import com.bank.repository.BankAccountRepository;
+import com.bank.repository.BankAgencyRepository;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -16,25 +17,29 @@ public class BankAccountService {
     final BankAccountRepository bankAccountRepository;
     final AssociateService associateService;
     final BankAgencyService bankAgencyService;
+    BankAgencyDto bankAgencyDto;
+    final BankAgencyRepository bankAgencyRepository;
 
 
-    public BankAccountService(BankAccountRepository bankAccountRepository, AssociateService associateService, BankAgencyService bankAgencyService) {
+    public BankAccountService(BankAccountRepository bankAccountRepository, AssociateService associateService, BankAgencyService bankAgencyService, BankAgencyRepository bankAgencyRepository) {
         this.bankAccountRepository = bankAccountRepository;
         this.associateService = associateService;
         this.bankAgencyService = bankAgencyService;
+        this.bankAgencyRepository = bankAgencyRepository;
     }
 
-    //@Transactional
+
     public ResponseEntity<BankAccount> createAccount(@RequestBody BankAccountDto bankAccountDto){
         if (Objects.isNull(bankAccountDto.getAgencyId())){
             throw new RuntimeException("Bank Agency Number vazio!");
         }
 
 
-        if (this.bankAccountRepository.countByNumberAccountAndNumberAgency(bankAccountDto.getNumberAccount(), bankAccountDto.getAgencyId())){
-            throw new RuntimeException("Bank Account já registrada!");
-        }
+        long bankNumber = this.bankAgencyRepository.selectBankNumberByAgencyId(bankAccountDto.getAgencyId());
 
+        if (this.bankAccountRepository.countByAssociateAndBank(bankNumber, bankAccountDto.getAssociateId())){
+            throw new RuntimeException("Associado já possui conta no banco!");
+        }
 
         BankAccount bankAccount = new BankAccount();
         bankAccount.setNumberAccount(bankAccountDto.getNumberAccount());
@@ -59,7 +64,15 @@ public class BankAccountService {
             throw new RuntimeException("Bank Account já registrada!");
         }
 
-        BankAccount bankAccount = this.bankAccountRepository.findById(id).orElseThrow(() -> {
+        bankAccountDto.setBankNumber(bankAgencyDto.getBankNumber());
+
+        if (bankAccountRepository.countByAssociateAndBank(bankAgencyDto.getBankNumber(), bankAccountDto.getAssociateId())){
+            throw new RuntimeException("Associado já possui conta no banco!");
+        }
+
+        BankAccount bankAccount = new BankAccount();
+
+        bankAccount = this.bankAccountRepository.findById(id).orElseThrow(() -> {
             return new RuntimeException("Account não encontrada!");
         });
 

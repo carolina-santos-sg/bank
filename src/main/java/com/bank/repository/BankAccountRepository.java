@@ -19,4 +19,11 @@ public interface BankAccountRepository extends JpaRepository<BankAccount, Long> 
                          " WHERE ba2.number_account = :numberAccount AND ba2.agency_id = :agencyId")
     boolean countByNumberAccountAndNumberAgency(@Param("numberAccount") Long numberAccount, @Param("agencyId") Long agencyId);
 
+    @Query (nativeQuery = true,
+                  value = " SELECT COUNT(*) > 0 " +
+                          " FROM bank_account ba " +
+                          " JOIN bank_agency ba2 ON ba.agency_id = ba2.id " +
+                          " JOIN bank b on ba2.bank_number = b.bank_number " +
+                          " WHERE b.bank_number = :bankNumber and associate_id = :associateId")
+    boolean countByAssociateAndBank(@Param("bankNumber") long bankNumber, @Param("associateId") long associateId);
 }

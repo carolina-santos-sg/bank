@@ -24,6 +24,4 @@ public class BankAgency {
     @ManyToOne
     private Bank bankNumber;
 
-//    @ManyToMany
-//    List<Bank> banks;
 }
