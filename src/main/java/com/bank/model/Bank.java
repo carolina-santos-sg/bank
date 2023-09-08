@@ -18,7 +18,4 @@ public class Bank {
 
     @Column(name = "bank_name")
     private String bankName;
-
-//    @OneToMany
-//    List <BankAgency> bankAgencies;
 }

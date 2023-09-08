@@ -44,7 +44,6 @@ public class BankAccountService {
         BankAccount bankAccount = new BankAccount();
         bankAccount.setNumberAccount(bankAccountDto.getNumberAccount());
         bankAccount.setBalance(bankAccountDto.getBalance());
-        bankAccount.setTransactionLimit(bankAccountDto.getTransactionLimit());
         bankAccount.setAgencyId(this.bankAgencyService.findAgencyById(bankAccountDto.getAgencyId()));
         bankAccount.setAssociateId(this.associateService.findAssociateById(bankAccountDto.getAssociateId()));
 

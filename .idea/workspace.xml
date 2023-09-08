@@ -6,12 +6,10 @@
   <component name="ChangeListManager">
     <list default="true" id="32b0e422-53d7-4b4b-8dc9-abcdabf766f9" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/bank/controller/TransactionController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/bank/controller/TransactionController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/bank/dto/TransactionDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/bank/dto/TransactionDto.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/bank/enums/TransactionEnums.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/bank/enums/TransactionEnums.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/bank/repository/TransactionsRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/bank/repository/TransactionsRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/bank/dto/BankAccountDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/bank/dto/BankAccountDto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/bank/model/Bank.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/bank/model/Bank.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/bank/model/BankAccount.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/bank/model/BankAccount.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/bank/service/BankAccountService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/bank/service/BankAccountService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/bank/service/TransactionService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/bank/service/TransactionService.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -57,7 +55,7 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "WebServerToolWindowFactoryState": "false",
-    "git-widget-placeholder": "main",
+    "git-widget-placeholder": "version2",
     "last_opened_file_path": "/home/sg/CAROL/bank2",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
@@ -107,7 +105,7 @@
       <workItem from="1693996505362" duration="23203000" />
       <workItem from="1694034272929" duration="77000" />
       <workItem from="1694169084867" duration="10281000" />
-      <workItem from="1694179547895" duration="16179000" />
+      <workItem from="1694179547895" duration="18796000" />
     </task>
     <servers />
   </component>
@@ -142,25 +140,6 @@
           <url>file://$PROJECT_DIR$/src/Main.java</url>
           <line>13</line>
           <option name="timeStamp" value="1" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/com/bank/repository/TransactionsRepository.java</url>
-          <line>29</line>
-          <option name="timeStamp" value="14" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/com/bank/repository/TransactionsRepository.java</url>
-          <line>25</line>
-          <option name="timeStamp" value="15" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-method">
-          <url>file://$PROJECT_DIR$/src/main/java/com/bank/repository/TransactionsRepository.java</url>
-          <line>28</line>
-          <properties class="com.bank.repository.TransactionsRepository" method="countTransactionByDateTransaction">
-            <option name="EMULATED" value="true" />
-            <option name="WATCH_EXIT" value="false" />
-          </properties>
-          <option name="timeStamp" value="16" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
