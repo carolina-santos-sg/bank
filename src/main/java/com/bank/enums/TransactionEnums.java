@@ -1,10 +1,18 @@
 package com.bank.enums;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 
 @Getter
-@NoArgsConstructor
-public class TransactionEnums {
+//@AllArgsConstructor
+public enum TransactionEnums {
+    DEPOSIT("DEPOSIT"),
+    WITHDRAW("WITHDRAW"),
+    TRANSFER("TRANSFER");
+
+    public String transactionEnums;
+    TransactionEnums(String enums){
+        transactionEnums = enums;
+    }
 
 }

@@ -70,9 +70,8 @@ public class BankAccountService {
             throw new RuntimeException("Associado já possui conta no banco!");
         }
 
-        BankAccount bankAccount = new BankAccount();
 
-        bankAccount = this.bankAccountRepository.findById(id).orElseThrow(() -> {
+        BankAccount bankAccount = this.bankAccountRepository.findById(id).orElseThrow(() -> {
             return new RuntimeException("Account não encontrada!");
         });
 
@@ -81,6 +80,12 @@ public class BankAccountService {
         bankAccount.setAssociateId(this.associateService.findAssociateById(bankAccountDto.getAssociateId()));
 
         return ResponseEntity.ok(bankAccountRepository.save(bankAccount));
+    }
+
+    public BankAccount findById(long id){
+        return this.bankAccountRepository.findById(id).orElseThrow(() -> {
+            return new RuntimeException("Account Id não encontrado!");
+        });
     }
 
 }
