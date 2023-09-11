@@ -10,7 +10,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Objects;
 
@@ -54,9 +53,7 @@ public class TransactionService {
         transaction.setDateTransaction(new Date());
 
         //validação da conta destino do depósito
-        BankAccount targetAccount  = this.bankAccountRepository.findById(transactionDto.getTargetAccountId()).orElseThrow(()->{
-            return new RuntimeException("Account não encontrada!");
-        });
+        BankAccount targetAccount  = this.bankAccountRepository.findById(transactionDto.getTargetAccountId()).orElseThrow(()-> new RuntimeException("Account não encontrada!"));
 
         //operação do depósito
         targetAccount.setBalance(targetAccount.getBalance().add(transactionDto.getTransactionValue()));
@@ -77,16 +74,12 @@ public class TransactionService {
         validations(transactionDto, transactionEnums.toString());
 
         //operações na sourceAccount
-        BankAccount sourceAccount  = this.bankAccountRepository.findById(transactionDto.getSourceAccountId()).orElseThrow(()->{
-            return new RuntimeException("SourceAccount não encontrada!");
-        });
+        BankAccount sourceAccount  = this.bankAccountRepository.findById(transactionDto.getSourceAccountId()).orElseThrow(()-> new RuntimeException("SourceAccount não encontrada!"));
         sourceAccount.setBalance(sourceAccount.getBalance().subtract(transactionDto.getTransactionValue()));
         this.bankAccountRepository.save(sourceAccount);
 
         //operações na targetAccount
-        BankAccount targetAccount  = this.bankAccountRepository.findById(transactionDto.getTargetAccountId()).orElseThrow(()->{
-            return new RuntimeException("TargetAccount não encontrada!");
-        });
+        BankAccount targetAccount  = this.bankAccountRepository.findById(transactionDto.getTargetAccountId()).orElseThrow(()-> new RuntimeException("TargetAccount não encontrada!"));
         targetAccount.setBalance(targetAccount.getBalance().add(transactionDto.getTransactionValue()));
         this.bankAccountRepository.save(targetAccount);
 
@@ -134,19 +127,29 @@ public class TransactionService {
 
         //valor limite da transação
         BigDecimal maxLimit = new BigDecimal("0");
-        SimpleDateFormat today = new SimpleDateFormat();
-            //TRANSFER
-        if (this.transactionsRepository.totalValueTransactionByType(transactionDto.getSourceAccountId(), "TRANSFER", today).compareTo(new BigDecimal("0")) > 0){
-            maxLimit.add(this.transactionsRepository.totalValueTransactionByType(transactionDto.getSourceAccountId(), "TRANSFER", today));
-        }
+        BigDecimal zero = new BigDecimal("0");
+
             //WITHDRAW
-        if (this.transactionsRepository.totalValueTransactionByType(transactionDto.getSourceAccountId(), "WITHDRAW", today).compareTo(new BigDecimal("0")) > 0){
-            maxLimit.add(this.transactionsRepository.totalValueTransactionByType(transactionDto.getSourceAccountId(), "WITHDRAW", today));
+        if (this.transactionsRepository.totalValueTransactionByTypeAndSourceAccount(transactionDto.getSourceAccountId(), TransactionEnums.WITHDRAW.getTransactionEnums()).compareTo(zero) > 0){
+            maxLimit = maxLimit.add(this.transactionsRepository.totalValueTransactionByTypeAndSourceAccount(transactionDto.getSourceAccountId(), "WITHDRAW"));
         }
             //DEPOSIT
-        if (this.transactionsRepository.totalValueTransactionByType(transactionDto.getSourceAccountId(), "DEPOSIT", today).compareTo(new BigDecimal("0")) > 0){
-            maxLimit.subtract(this.transactionsRepository.totalValueTransactionByType(transactionDto.getSourceAccountId(), "DEPOSIT", today));
+        if (this.transactionsRepository.totalValueTransactionByTypeAndTargetAccount(transactionDto.getTargetAccountId(), TransactionEnums.DEPOSIT.toString()).compareTo(BigDecimal.ZERO) > 0){
+            maxLimit = maxLimit.subtract(this.transactionsRepository.totalValueTransactionByTypeAndTargetAccount(transactionDto.getTargetAccountId(), TransactionEnums.DEPOSIT.toString()));
         }
+            //TRANSFER
+        Transaction transaction = this.transactionsRepository.dataTransaction(TransactionEnums.TRANSFER.toString());
+
+        if (Objects.nonNull(transaction) && transaction.getSourceAccountId().equals(transactionDto.getSourceAccountId())){
+            maxLimit = maxLimit.add(this.transactionsRepository.totalValueTransactionByTypeAndSourceAccount(transactionDto.getSourceAccountId(), TransactionEnums.TRANSFER.toString()));
+        }
+//        if (this.transactionsRepository.dataTransaction(TransactionEnums.TRANSFER.toString()).getSourceAccountId().equals(transactionDto.getSourceAccountId())){
+//            maxLimit = maxLimit.add(this.transactionsRepository.totalValueTransactionByTypeAndSourceAccount(transactionDto.getSourceAccountId(), TransactionEnums.TRANSFER.toString()));
+//        }
+        if (this.transactionsRepository.dataTransaction(TransactionEnums.TRANSFER.toString()).getSourceAccountId().equals(transactionDto.getTargetAccountId())){
+            maxLimit = maxLimit.add(this.transactionsRepository.totalValueTransactionByTypeAndTargetAccount(transactionDto.getTargetAccountId(), TransactionEnums.TRANSFER.toString()));
+        }
+
             //validando maxLimit
         if (transactionDto.getTransactionValue().compareTo(maxLimit.multiply(BigDecimal.valueOf(0.3))) > 0){
             throw new RuntimeException("O valor da transação extrapola o limite diário!");
