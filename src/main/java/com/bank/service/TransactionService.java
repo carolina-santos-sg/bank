@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Objects;
 
@@ -122,12 +123,6 @@ public class TransactionService {
             throw new RuntimeException("Valor da operação inválido!");
         }
 
-        //valor limite da transação
-        BigDecimal maxLimit = new BigDecimal(String.valueOf(this.bankAccountService.findById(transactionDto.getSourceAccountId()).getBalance().multiply(BigDecimal.valueOf(0.30))));
-        if (transactionDto.getTransactionValue().compareTo(maxLimit) > 0) {
-            throw new RuntimeException("Valor da operação superior ao limite permitido da conta de origem");
-        }
-
         //limite de transação diário
         if (this.transactionsRepository.countTransactionByDateTransaction(transactionDto.getSourceAccountId(),transactionEnums) > 0
             && transactionEnums.compareTo("WITHDRAW") >= 0){
@@ -137,8 +132,25 @@ public class TransactionService {
             throw new RuntimeException("Limite diário atingido para esse tipo de operação!");
         }
 
-
-
+        //valor limite da transação
+        BigDecimal maxLimit = new BigDecimal("0");
+        SimpleDateFormat today = new SimpleDateFormat();
+            //TRANSFER
+        if (this.transactionsRepository.totalValueTransactionByType(transactionDto.getSourceAccountId(), "TRANSFER", today).compareTo(new BigDecimal("0")) > 0){
+            maxLimit.add(this.transactionsRepository.totalValueTransactionByType(transactionDto.getSourceAccountId(), "TRANSFER", today));
+        }
+            //WITHDRAW
+        if (this.transactionsRepository.totalValueTransactionByType(transactionDto.getSourceAccountId(), "WITHDRAW", today).compareTo(new BigDecimal("0")) > 0){
+            maxLimit.add(this.transactionsRepository.totalValueTransactionByType(transactionDto.getSourceAccountId(), "WITHDRAW", today));
+        }
+            //DEPOSIT
+        if (this.transactionsRepository.totalValueTransactionByType(transactionDto.getSourceAccountId(), "DEPOSIT", today).compareTo(new BigDecimal("0")) > 0){
+            maxLimit.subtract(this.transactionsRepository.totalValueTransactionByType(transactionDto.getSourceAccountId(), "DEPOSIT", today));
+        }
+            //validando maxLimit
+        if (transactionDto.getTransactionValue().compareTo(maxLimit.multiply(BigDecimal.valueOf(0.3))) > 0){
+            throw new RuntimeException("O valor da transação extrapola o limite diário!");
+        }
     }
 
 }

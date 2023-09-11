@@ -28,8 +28,7 @@ public interface BankAgencyRepository extends JpaRepository<BankAgency, Long> {
 
     @Query(nativeQuery = true,
             value = " SELECT ba.bank_number " +
-                    " FROM bank_agency ba JOIN bank_account ba2 " +
-                    " ON ba2.agency_id = ba.id " +
-                    " WHERE ba2.agency_id = :agencyId")
-    long selectBankNumberByAgencyId(@Param("agencyId") long agencyId);
+                    " FROM bank_agency ba " +
+                    " WHERE ba.id = :agencyId")
+    Long selectBankNumberByAgencyId(@Param("agencyId") long agencyId);
 }

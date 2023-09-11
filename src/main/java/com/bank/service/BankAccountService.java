@@ -35,9 +35,9 @@ public class BankAccountService {
         }
 
 
-        long bankNumber = this.bankAgencyRepository.selectBankNumberByAgencyId(bankAccountDto.getAgencyId());
+        bankAccountDto.setBankNumber(this.bankAgencyRepository.selectBankNumberByAgencyId(bankAccountDto.getAgencyId()));
 
-        if (this.bankAccountRepository.countByAssociateAndBank(bankNumber, bankAccountDto.getAssociateId())){
+        if (this.bankAccountRepository.countByAssociateAndBank(bankAccountDto.getBankNumber(), bankAccountDto.getAssociateId())){
             throw new RuntimeException("Associado já possui conta no banco!");
         }
 

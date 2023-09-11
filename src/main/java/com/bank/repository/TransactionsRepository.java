@@ -14,20 +14,20 @@ import java.util.Date;
 
 @Repository
 public interface TransactionsRepository extends JpaRepository<Transaction, Long> {
-//    @Query(nativeQuery = true,
-//                 value = " SELECT COUNT(*) > 0 " +
-//                         " FROM transaction t " +
-//                         " WHERE t.source_account = :sourceAccountId AND t.type = :transactionType " +
-//                         " AND t.date = current_date ")
-//    public boolean countTransactionByDateTransaction(@Param("sourceAccountId") long id,
-//                                                     @Param("transactionType") String transactionType);
-
-        @Query(nativeQuery = true,
-                 value = " SELECT COUNT(*) FROM transaction t " +
-                         " WHERE t.date > current_date AND t.source_account = :sourceAccountId " +
-                         " AND t.type = :transactionType ")
-    public int countTransactionByDateTransaction(@Param("sourceAccountId") long sourceAccountId,
+    @Query(nativeQuery = true,
+             value = " SELECT COUNT(*) FROM transaction t " +
+                     " WHERE t.date > current_date AND t.source_account = :sourceAccountId " +
+                     " AND t.type = :transactionType ")
+    int countTransactionByDateTransaction(@Param("sourceAccountId") long sourceAccountId,
                                                      @Param("transactionType") String transactionType);
 
-
+    @Query(nativeQuery = true,
+                 value = " SELECT SUM(value) " +
+                         " FROM transaction t " +
+                         " WHERE source_account = :sourceAccountId " +
+                         " AND t.type = :transactionType " +
+                         " AND t.date = :today ")
+    BigDecimal totalValueTransactionByType(@Param("sourceAccountId") long sourceAccountId,
+                                                  @Param("transactionType") String transactionType,
+                                                  @Param("today") SimpleDateFormat today);
 }
