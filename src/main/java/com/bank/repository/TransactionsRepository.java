@@ -31,8 +31,9 @@ public interface TransactionsRepository extends JpaRepository<Transaction, Long>
 
     @Query(nativeQuery = true, value = " SELECT * " +
                                        " FROM transaction t " +
-                                       " WHERE t.date > CURRENT_DATE AND t.transaction_type = :transactionType ")
-    Transaction dataTransaction(@Param("transactionType") String transactionType);
+                                       " WHERE t.date > CURRENT_DATE AND t.transaction_type = :transactionType" +
+                                       " AND t.source_account = :accountId ")
+    Transaction dataTransaction(@Param("transactionType") String transactionType, @Param("accountId") long accountId);
 
     @Query(nativeQuery = true,
             value = " SELECT (COALESCE(SUM(value),0)) " +

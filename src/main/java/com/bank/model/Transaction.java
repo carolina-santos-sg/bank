@@ -17,7 +17,7 @@ public class Transaction {
     @Column(name = "id_transaction")
     private long id;
 
-    @Column(name = "type")
+    @Column(name = "transaction_type")
     private String transactionType;
 
     @Column(name = "value")

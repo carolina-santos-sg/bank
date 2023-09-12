@@ -5,6 +5,7 @@ import com.bank.enums.TransactionEnums;
 import com.bank.model.BankAccount;
 import com.bank.model.Transaction;
 import com.bank.repository.BankAccountRepository;
+import com.bank.repository.BankRepository;
 import com.bank.repository.TransactionsRepository;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -16,11 +17,13 @@ import java.util.Objects;
 @Service
 public class TransactionService {
     private  final TransactionsRepository transactionsRepository;
+    private final BankRepository bankRepository;
     private final BankAccountRepository bankAccountRepository;
     private final BankAccountService bankAccountService;
 
-    public TransactionService(TransactionsRepository transactionsRepository, BankAccountRepository bankAccountRepository, BankAccountService bankAccountService) {
+    public TransactionService(TransactionsRepository transactionsRepository, BankRepository bankRepository, BankAccountRepository bankAccountRepository, BankAccountService bankAccountService) {
         this.transactionsRepository = transactionsRepository;
+        this.bankRepository = bankRepository;
         this.bankAccountRepository = bankAccountRepository;
         this.bankAccountService = bankAccountService;
     }
@@ -95,32 +98,33 @@ public class TransactionService {
 
     }
 
-    public void validations(TransactionDto transactionDto, String transactionEnums){
+    public void validations(TransactionDto transactionDto, String transactionEnums) {
         //precisa ter conta de origem e conta destino
-        if (Objects.isNull(transactionDto.getTargetAccountId()) && Objects.isNull(transactionDto.getSourceAccountId())){
+        if (Objects.isNull(transactionDto.getTargetAccountId()) && Objects.isNull(transactionDto.getSourceAccountId())) {
             throw new RuntimeException("É preciso informar um bankAccount!");
         }
 
         //sourceAccount != targetAccount
-        if (transactionDto.getTargetAccountId() == transactionDto.getSourceAccountId()){
+        if (transactionDto.getTargetAccountId() == transactionDto.getSourceAccountId()) {
             throw new RuntimeException("As contas de origem e de destino devem ser diferentes!");
         }
 
         //valor não pode ser nulo
-        if (Objects.isNull(transactionDto.getTransactionValue())){
+        if (Objects.isNull(transactionDto.getTransactionValue())) {
             throw new RuntimeException("É preciso informar o valor da operação!");
         }
 
         //valor da operação precisa ser maior do que 0
-        if (transactionDto.getTransactionValue().compareTo(new BigDecimal("0")) <= 0){
+        if (transactionDto.getTransactionValue().compareTo(BigDecimal.ZERO) <= 0 ||
+                transactionDto.getTransactionValue().compareTo(this.bankAccountRepository.balanceByAccount(transactionDto.getSourceAccountId())) > 0) {
             throw new RuntimeException("Valor da operação inválido!");
         }
 
         //limite de transação diário
-        if (this.transactionsRepository.countTransactionByDateTransaction(transactionDto.getSourceAccountId(),transactionEnums) > 0
-            && transactionEnums.compareTo("WITHDRAW") >= 0){
+        if (this.transactionsRepository.countTransactionByDateTransaction(transactionDto.getSourceAccountId(), transactionEnums) > 0
+                && transactionEnums.compareTo("WITHDRAW") >= 0) {
             throw new RuntimeException("Limite diário atingido para esse tipo de operação!");
-        } else if (this.transactionsRepository.countTransactionByDateTransaction(transactionDto.getSourceAccountId(),transactionEnums) > 0
+        } else if (this.transactionsRepository.countTransactionByDateTransaction(transactionDto.getSourceAccountId(), transactionEnums) > 0
                 && transactionEnums.compareTo("TRANSFER") >= 0) {
             throw new RuntimeException("Limite diário atingido para esse tipo de operação!");
         }
@@ -129,31 +133,31 @@ public class TransactionService {
         BigDecimal maxLimit = new BigDecimal("0");
         BigDecimal zero = new BigDecimal("0");
 
-            //WITHDRAW
-        if (this.transactionsRepository.totalValueTransactionByTypeAndSourceAccount(transactionDto.getSourceAccountId(), TransactionEnums.WITHDRAW.getTransactionEnums()).compareTo(zero) > 0){
+        //WITHDRAW
+        if (this.transactionsRepository.totalValueTransactionByTypeAndSourceAccount(transactionDto.getSourceAccountId(), TransactionEnums.WITHDRAW.getTransactionEnums()).compareTo(zero) > 0) {
             maxLimit = maxLimit.add(this.transactionsRepository.totalValueTransactionByTypeAndSourceAccount(transactionDto.getSourceAccountId(), "WITHDRAW"));
         }
-            //DEPOSIT
-        if (this.transactionsRepository.totalValueTransactionByTypeAndTargetAccount(transactionDto.getTargetAccountId(), TransactionEnums.DEPOSIT.toString()).compareTo(BigDecimal.ZERO) > 0){
-            maxLimit = maxLimit.subtract(this.transactionsRepository.totalValueTransactionByTypeAndTargetAccount(transactionDto.getTargetAccountId(), TransactionEnums.DEPOSIT.toString()));
+        //DEPOSIT
+        if (this.transactionsRepository.totalValueTransactionByTypeAndTargetAccount(transactionDto.getTargetAccountId(), TransactionEnums.DEPOSIT.toString()).compareTo(BigDecimal.ZERO) > 0) {
+            maxLimit = maxLimit.subtract(this.transactionsRepository.totalValueTransactionByTypeAndTargetAccount(transactionDto.getTargetAccountId(), "DEPOSIT"));
         }
-            //TRANSFER
-        Transaction transaction = this.transactionsRepository.dataTransaction(TransactionEnums.TRANSFER.toString());
+        //TRANSFER
+        Transaction transaction = this.transactionsRepository.dataTransaction("TRANSFER", transactionDto.getSourceAccountId());
 
-        if (Objects.nonNull(transaction) && transaction.getSourceAccountId().equals(transactionDto.getSourceAccountId())){
-            maxLimit = maxLimit.add(this.transactionsRepository.totalValueTransactionByTypeAndSourceAccount(transactionDto.getSourceAccountId(), TransactionEnums.TRANSFER.toString()));
-        }
-//        if (this.transactionsRepository.dataTransaction(TransactionEnums.TRANSFER.toString()).getSourceAccountId().equals(transactionDto.getSourceAccountId())){
-//            maxLimit = maxLimit.add(this.transactionsRepository.totalValueTransactionByTypeAndSourceAccount(transactionDto.getSourceAccountId(), TransactionEnums.TRANSFER.toString()));
-//        }
-        if (this.transactionsRepository.dataTransaction(TransactionEnums.TRANSFER.toString()).getSourceAccountId().equals(transactionDto.getTargetAccountId())){
-            maxLimit = maxLimit.add(this.transactionsRepository.totalValueTransactionByTypeAndTargetAccount(transactionDto.getTargetAccountId(), TransactionEnums.TRANSFER.toString()));
+        if (Objects.nonNull(transaction) && transaction.getSourceAccountId().equals(transactionDto.getSourceAccountId())) {
+            maxLimit = maxLimit.add(this.transactionsRepository.totalValueTransactionByTypeAndSourceAccount(transactionDto.getSourceAccountId(), "TRANSFER"));
         }
 
-            //validando maxLimit
-        if (transactionDto.getTransactionValue().compareTo(maxLimit.multiply(BigDecimal.valueOf(0.3))) > 0){
-            throw new RuntimeException("O valor da transação extrapola o limite diário!");
+        if (Objects.nonNull(transaction) && transaction.getTargetAccountId().equals(transactionDto.getTargetAccountId())) {
+            maxLimit = maxLimit.subtract(this.transactionsRepository.totalValueTransactionByTypeAndTargetAccount(transactionDto.getTargetAccountId(), "TRANSFER"));
+        }
+
+        //validando maxLimit
+        if (this.bankRepository.fullBalanceByBank(transactionDto.getSourceAccountId()).compareTo(this.bankAccountRepository.balanceByAccount(transactionDto.getSourceAccountId())) < 0){
+            maxLimit = maxLimit.multiply(BigDecimal.valueOf(0.3));
+            if ((maxLimit.compareTo(BigDecimal.ZERO) >= 0) && transactionDto.getTransactionValue().compareTo(maxLimit) > 0) {
+                throw new RuntimeException("O valor da transação extrapola o limite diário!");
+            }
         }
     }
-
 }
