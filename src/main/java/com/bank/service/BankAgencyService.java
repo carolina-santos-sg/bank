@@ -31,18 +31,22 @@ public class BankAgencyService {
 
     //@Transactional
     public ResponseEntity<BankAgency> registerAgency(@RequestBody BankAgencyDto bankAgencyDto){
+        //validação do bank number - null
         if (Objects.isNull(bankAgencyDto.getBankNumber())){
             throw new RuntimeException("Bank Number vazio!");
         }
 
+        //validação da bank number - existência
         if (!this.bankRepository.countBankByNumber(bankAgencyDto.getBankNumber())){
             throw new RuntimeException("Bank não existe!");
         }
 
+        //validando se a agência já está registrada
         if (this.agencyRepository.countAgencyAndBankByNumber(bankAgencyDto.getAgencyNumber(), bankAgencyDto.getBankNumber())){
            throw new RuntimeException("Bank Agency já registrada!");
         }
 
+        //cadastrando agência
         BankAgency bankAgency = new BankAgency();
         bankAgency.setAgencyNumber(bankAgencyDto.getAgencyNumber());
         bankAgency.setBankNumber(this.bankService.findBankById(bankAgencyDto.getBankNumber()));
@@ -51,20 +55,19 @@ public class BankAgencyService {
     }
 
     public BankAgency findAgencyById(Long id){
-        return this.agencyRepository.findById(id).orElseThrow(() -> {
-            return new RuntimeException("Agency não encontrado!");
-        });
+        return this.agencyRepository.findById(id).orElseThrow(() -> new RuntimeException("Agency não encontrado!"));
     }
 
     public ResponseEntity<Object> updateAgency(long id, BankAgencyDto bankAgencyDto){
+        //validando id da bank agency - null
         if (Objects.isNull(id)){
             throw new RuntimeException("É preciso informar um bankAgency!");
         }
 
-        BankAgency agency = this.agencyRepository.findById(id).orElseThrow(() -> {
-            return new RuntimeException("Agência não encontrada!");
-        });
+        //validando bank agency id - existe
+        BankAgency agency = this.agencyRepository.findById(id).orElseThrow(() -> new RuntimeException("Agência não encontrada!"));
 
+        //alterando o número da agência
         agency.setAgencyNumber(bankAgencyDto.getAgencyNumber());
 
         return ResponseEntity.ok(this.agencyRepository.save(agency));

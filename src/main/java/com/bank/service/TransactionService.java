@@ -33,6 +33,11 @@ public class TransactionService {
     }
 
     public Object deposit(TransactionDto transactionDto){
+        //precisa ter saldo na conta para poder realizar transações
+        if (this.bankAccountRepository.balanceByAccount(transactionDto.getSourceAccountId()).compareTo(BigDecimal.ZERO) <= 0){
+            throw new RuntimeException("É preciso ter saldo na conta para poder realizar transações!");
+        }
+
         //precisa ter conta de origem e conta destino
         if (Objects.isNull(transactionDto.getTargetAccountId()) && Objects.isNull(transactionDto.getSourceAccountId())){
             throw new RuntimeException("É preciso informar um bankAccount!");
@@ -70,7 +75,25 @@ public class TransactionService {
 
     public ResponseEntity<Object> withdraw(TransactionDto transactionDto, TransactionEnums transactionEnums){
         validations(transactionDto, transactionEnums.toString());
-        return ResponseEntity.ok("");
+
+        //settando dados da transação
+        Transaction transaction = new Transaction();
+        transaction.setTransactionValue(transactionDto.getTransactionValue());
+        transaction.setSourceAccountId(this.bankAccountService.findById(transactionDto.getSourceAccountId()));
+        transaction.setTransactionType(TransactionEnums.DEPOSIT.getTransactionEnums());
+        transaction.setDateTransaction(new Date());
+
+        //validação da conta origem do saque
+        BankAccount sourceAccount  = this.bankAccountRepository.findById(transactionDto.getSourceAccountId()).orElseThrow(()-> new RuntimeException("Account não encontrada!"));
+
+        //operação do saque
+        sourceAccount.setBalance(sourceAccount.getBalance().subtract(transactionDto.getTransactionValue()));
+
+        //registrando a operação
+        this.transactionsRepository.save(transaction);
+
+        //retornando o registro do bankAccount atualizado
+        return ResponseEntity.ok(this.bankAccountRepository.save(sourceAccount));
     }
 
     public ResponseEntity<Object> transfer(TransactionDto transactionDto, TransactionEnums transactionEnums){
@@ -95,10 +118,16 @@ public class TransactionService {
         transaction.setDateTransaction(new Date());
 
         return ResponseEntity.ok(this.transactionsRepository.save(transaction));
-
     }
 
+
+
     public void validations(TransactionDto transactionDto, String transactionEnums) {
+        //precisa ter saldo na conta para poder realizar transações
+        if (this.bankAccountRepository.balanceByAccount(transactionDto.getSourceAccountId()).compareTo(BigDecimal.ZERO) <= 0){
+            throw new RuntimeException("É preciso ter saldo na conta para poder realizar transações!");
+        }
+
         //precisa ter conta de origem e conta destino
         if (Objects.isNull(transactionDto.getTargetAccountId()) && Objects.isNull(transactionDto.getSourceAccountId())) {
             throw new RuntimeException("É preciso informar um bankAccount!");
@@ -155,7 +184,7 @@ public class TransactionService {
         //validando maxLimit
         if (this.bankRepository.fullBalanceByBank(transactionDto.getSourceAccountId()).compareTo(this.bankAccountRepository.balanceByAccount(transactionDto.getSourceAccountId())) < 0){
             maxLimit = maxLimit.multiply(BigDecimal.valueOf(0.3));
-            if ((maxLimit.compareTo(BigDecimal.ZERO) >= 0) && transactionDto.getTransactionValue().compareTo(maxLimit) > 0) {
+            if ((maxLimit.compareTo(new BigDecimal("0.0")) > 0) && transactionDto.getTransactionValue().compareTo(maxLimit) > 0) {
                 throw new RuntimeException("O valor da transação extrapola o limite diário!");
             }
         }

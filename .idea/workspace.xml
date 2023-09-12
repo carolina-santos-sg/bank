@@ -6,12 +6,6 @@
   <component name="ChangeListManager">
     <list default="true" id="32b0e422-53d7-4b4b-8dc9-abcdabf766f9" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/bank/model/Bank.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/bank/model/Bank.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/bank/model/Transaction.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/bank/model/Transaction.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/bank/repository/BankAccountRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/bank/repository/BankAccountRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/bank/repository/BankAgencyRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/bank/repository/BankAgencyRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/bank/repository/BankRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/bank/repository/BankRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/bank/repository/TransactionsRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/bank/repository/TransactionsRepository.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/bank/service/TransactionService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/bank/service/TransactionService.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -112,7 +106,7 @@
       <workItem from="1694179547895" duration="18796000" />
       <workItem from="1694430496947" duration="20640000" />
       <workItem from="1694463265910" duration="3221000" />
-      <workItem from="1694516391854" duration="7012000" />
+      <workItem from="1694516391854" duration="15148000" />
     </task>
     <servers />
   </component>
@@ -150,25 +144,43 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/com/bank/service/TransactionService.java</url>
-          <line>155</line>
-          <option name="timeStamp" value="28" />
+          <line>76</line>
+          <option name="timeStamp" value="32" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/com/bank/service/TransactionService.java</url>
-          <line>157</line>
-          <option name="timeStamp" value="29" />
+          <line>183</line>
+          <option name="timeStamp" value="33" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/com/bank/service/TransactionService.java</url>
-          <line>158</line>
-          <option name="timeStamp" value="30" />
+          <line>184</line>
+          <option name="timeStamp" value="34" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/com/bank/service/TransactionService.java</url>
+          <line>185</line>
+          <option name="timeStamp" value="35" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/com/bank/service/TransactionService.java</url>
+          <line>186</line>
+          <option name="timeStamp" value="36" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-method">
+          <url>file://$PROJECT_DIR$/src/main/java/com/bank/service/TransactionService.java</url>
+          <line>75</line>
+          <properties class="com.bank.service.TransactionService" method="withdraw">
+            <option name="EMULATED" value="true" />
+            <option name="WATCH_EXIT" value="false" />
+          </properties>
+          <option name="timeStamp" value="31" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
     <watches-manager>
       <configuration name="SpringBootApplicationConfigurationType">
         <watch expression="this.transactionsRepository.totalValueTransactionByTypeAndSourceAccount(transactionDto.getSourceAccountId(), &quot;WITHDRAW&quot;, today).compareTo(new BigDecimal(&quot;0&quot;))" language="JAVA" />
-        <watch expression="transactionEnums" />
       </configuration>
     </watches-manager>
   </component>

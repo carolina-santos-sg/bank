@@ -30,8 +30,9 @@ public class BankAccountService {
 
 
     public ResponseEntity<BankAccount> createAccount(@RequestBody BankAccountDto bankAccountDto){
+        //validando bank agency id
         if (Objects.isNull(bankAccountDto.getAgencyId())){
-            throw new RuntimeException("Bank Agency Number vazio!");
+            throw new RuntimeException("Bank Agency vazio!");
         }
 
 
