@@ -33,8 +33,7 @@ public class AssociateController {
     }
 
     @PutMapping("/updateAssociate")
-    public Associate updateAssociate(@RequestBody Associate associate){
-        this.associateService.existsAssociate(associate);
-        return associateRepository.save(associate);
+    public ResponseEntity<Object> updateAssociate(@RequestBody Associate associate){
+        return ResponseEntity.ok(this.associateService.updateAssociate(associate));
     }
 }

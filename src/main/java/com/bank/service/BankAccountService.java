@@ -60,32 +60,25 @@ public class BankAccountService {
             throw new RuntimeException("É preciso informar um bankAccount!");
         }
 
-        if (this.bankAccountRepository.countByNumberAccountAndNumberAgency(bankAccountDto.getNumberAccount(), bankAccountDto.getAgencyId())){
-            throw new RuntimeException("Bank Account já registrada!");
-        }
+        bankAccountDto.setBankNumber(this.bankAgencyRepository.selectBankNumberByAgencyId(bankAccountDto.getAgencyId()));
 
-        bankAccountDto.setBankNumber(bankAgencyDto.getBankNumber());
-
-        if (bankAccountRepository.countByAssociateAndBank(bankAgencyDto.getBankNumber(), bankAccountDto.getAssociateId())){
+        if (this.bankAccountRepository.countByAssociateAndBank(bankAccountDto.getBankNumber(), bankAccountDto.getAssociateId())
+                && !this.bankAccountRepository.getBankAgencyByAccountId(id).equals(bankAccountDto.getAgencyId())){
             throw new RuntimeException("Associado já possui conta no banco!");
         }
 
-
-        BankAccount bankAccount = this.bankAccountRepository.findById(id).orElseThrow(() -> {
-            return new RuntimeException("Account não encontrada!");
-        });
+        BankAccount bankAccount = this.bankAccountRepository.findById(id).orElseThrow(() -> new RuntimeException("Account não encontrada!"));
 
         bankAccount.setNumberAccount(bankAccountDto.getNumberAccount());
         bankAccount.setAgencyId(this.associateService.findAgencyById(bankAccountDto.getAgencyId()));
         bankAccount.setAssociateId(this.associateService.findAssociateById(bankAccountDto.getAssociateId()));
+        bankAccount.setBalance(bankAccountDto.getBalance());
 
         return ResponseEntity.ok(bankAccountRepository.save(bankAccount));
     }
 
     public BankAccount findById(long id){
-        return this.bankAccountRepository.findById(id).orElseThrow(() -> {
-            return new RuntimeException("Account Id não encontrado!");
-        });
+        return this.bankAccountRepository.findById(id).orElseThrow(() -> new RuntimeException("Account Id não encontrado!"));
     }
 
 }

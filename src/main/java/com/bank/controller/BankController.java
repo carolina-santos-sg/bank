@@ -1,7 +1,6 @@
 package com.bank.controller;
 
 import com.bank.model.Bank;
-import com.bank.model.BankAgency;
 import com.bank.repository.BankRepository;
 import com.bank.service.BankService;
 import org.springframework.http.ResponseEntity;
@@ -31,11 +30,9 @@ public class BankController {
 
     @DeleteMapping("/deleteBank")
     public void deleteBank(@RequestBody Bank bank){
-        bankRepository.delete(bank);
+        this.bankRepository.delete(bank);
     }
 
     @PutMapping("/updateBank")
-    public Bank updateBank(@RequestBody Bank bank){
-        return bankRepository.save(bank);
-    }
+    public ResponseEntity<Object> updateBank(@RequestBody Bank bank){ return ResponseEntity.ok(this.bankService.updateBank(bank)); }
 }

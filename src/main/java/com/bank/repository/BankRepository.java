@@ -30,4 +30,10 @@ public interface BankRepository extends JpaRepository<Bank, Long>{
                          " WHERE ba2.id = :accountId " +
                          " LIMIT 1 ")
     BigDecimal fullBalanceByBank (@Param("accountId") long accountId);
+
+    @Query(nativeQuery = true,
+                 value = " SELECT b.bank_number " +
+                         " FROM bank b " +
+                         " WHERE b.bank_name = :bankName ")
+    Long findByBankName(@Param("bankName") String bankName);
 }

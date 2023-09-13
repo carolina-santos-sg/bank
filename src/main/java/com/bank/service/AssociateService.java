@@ -45,16 +45,17 @@ public class AssociateService {
     }
 
     public Associate findAssociateById(long id){
-
-        return this.associateRepository.findById(id).orElseThrow( () -> {
-            return new RuntimeException("Associate não encontrado!");
-        });
+        return this.associateRepository.findById(id).orElseThrow(() -> new RuntimeException("Associate não encontrado!"));
     }
     public BankAgency findAgencyById(long id){
+        return this.bankAgencyRepository.findById(id).orElseThrow(() -> new RuntimeException("Agency não encontrado!"));
+    }
 
-        return this.bankAgencyRepository.findById(id).orElseThrow( () -> {
-            return new RuntimeException("Agency não encontrado!");
-        });
+    @Transactional
+    public ResponseEntity<Object> updateAssociate(Associate associate){
+        findAssociateById(associate.getId());
+
+        return ResponseEntity.ok(this.associateRepository.save(associate));
     }
 
 }

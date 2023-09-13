@@ -32,9 +32,9 @@ public class TransactionService {
         return ResponseEntity.ok(this.transactionsRepository.findAll());
     }
 
-    public Object deposit(TransactionDto transactionDto){
+    public ResponseEntity<Object> deposit(TransactionDto transactionDto){
         //precisa ter saldo na conta para poder realizar transações
-        if (this.bankAccountRepository.balanceByAccount(transactionDto.getSourceAccountId()).compareTo(BigDecimal.ZERO) <= 0){
+        if (this.bankAccountRepository.balanceByAccount(transactionDto.getTargetAccountId()).compareTo(BigDecimal.ZERO) <= 0){
             throw new RuntimeException("É preciso ter saldo na conta para poder realizar transações!");
         }
 
@@ -80,7 +80,7 @@ public class TransactionService {
         Transaction transaction = new Transaction();
         transaction.setTransactionValue(transactionDto.getTransactionValue());
         transaction.setSourceAccountId(this.bankAccountService.findById(transactionDto.getSourceAccountId()));
-        transaction.setTransactionType(TransactionEnums.DEPOSIT.getTransactionEnums());
+        transaction.setTransactionType(TransactionEnums.WITHDRAW.getTransactionEnums());
         transaction.setDateTransaction(new Date());
 
         //validação da conta origem do saque
@@ -159,11 +159,11 @@ public class TransactionService {
         }
 
         //valor limite da transação
-        BigDecimal maxLimit = new BigDecimal("0");
-        BigDecimal zero = new BigDecimal("0");
+        BigDecimal maxLimit = this.bankAccountRepository.balanceByAccount(transactionDto.getSourceAccountId());
+        BigDecimal zero     = new BigDecimal("0.0");
 
         //WITHDRAW
-        if (this.transactionsRepository.totalValueTransactionByTypeAndSourceAccount(transactionDto.getSourceAccountId(), TransactionEnums.WITHDRAW.getTransactionEnums()).compareTo(zero) > 0) {
+        if (this.transactionsRepository.totalValueTransactionByTypeAndSourceAccount(transactionDto.getSourceAccountId(), TransactionEnums.WITHDRAW.getTransactionEnums()).compareTo(BigDecimal.ZERO) > 0) {
             maxLimit = maxLimit.add(this.transactionsRepository.totalValueTransactionByTypeAndSourceAccount(transactionDto.getSourceAccountId(), "WITHDRAW"));
         }
         //DEPOSIT
@@ -173,18 +173,18 @@ public class TransactionService {
         //TRANSFER
         Transaction transaction = this.transactionsRepository.dataTransaction("TRANSFER", transactionDto.getSourceAccountId());
 
-        if (Objects.nonNull(transaction) && transaction.getSourceAccountId().equals(transactionDto.getSourceAccountId())) {
+        if (Objects.nonNull(transaction) && transaction.getSourceAccountId().getId() == transactionDto.getSourceAccountId()) {
             maxLimit = maxLimit.add(this.transactionsRepository.totalValueTransactionByTypeAndSourceAccount(transactionDto.getSourceAccountId(), "TRANSFER"));
         }
 
-        if (Objects.nonNull(transaction) && transaction.getTargetAccountId().equals(transactionDto.getTargetAccountId())) {
+        if (Objects.nonNull(transaction) && transaction.getTargetAccountId().getId() == transactionDto.getTargetAccountId()) {
             maxLimit = maxLimit.subtract(this.transactionsRepository.totalValueTransactionByTypeAndTargetAccount(transactionDto.getTargetAccountId(), "TRANSFER"));
         }
 
         //validando maxLimit
-        if (this.bankRepository.fullBalanceByBank(transactionDto.getSourceAccountId()).compareTo(this.bankAccountRepository.balanceByAccount(transactionDto.getSourceAccountId())) < 0){
+        if (this.bankRepository.fullBalanceByBank(transactionDto.getSourceAccountId()).compareTo(transactionDto.getTransactionValue()) < 0){
             maxLimit = maxLimit.multiply(BigDecimal.valueOf(0.3));
-            if ((maxLimit.compareTo(new BigDecimal("0.0")) > 0) && transactionDto.getTransactionValue().compareTo(maxLimit) > 0) {
+            if ((maxLimit.compareTo(zero) > 0) && transactionDto.getTransactionValue().compareTo(maxLimit) > 0) {
                 throw new RuntimeException("O valor da transação extrapola o limite diário!");
             }
         }

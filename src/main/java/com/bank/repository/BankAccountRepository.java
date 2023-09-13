@@ -15,10 +15,10 @@ import java.math.BigDecimal;
 @Repository
 public interface BankAccountRepository extends JpaRepository<BankAccount, Long> {
     @Query(nativeQuery = true,
-                 value = " SELECT COUNT(*) > 0 " +
-                         " FROM  bank_account ba2 " +
-                         " WHERE ba2.number_account = :numberAccount AND ba2.agency_id = :agencyId")
-    boolean countByNumberAccountAndNumberAgency(@Param("numberAccount") Long numberAccount, @Param("agencyId") Long agencyId);
+                 value = " SELECT ba.agency_id " +
+                         " FROM bank_account ba  " +
+                         " WHERE ba.id = :bankAccountId ")
+    Long getBankAgencyByAccountId(@Param("bankAccountId") Long bankAccountId);
 
     @Query (nativeQuery = true,
                   value = " SELECT COUNT(*) > 0 " +
