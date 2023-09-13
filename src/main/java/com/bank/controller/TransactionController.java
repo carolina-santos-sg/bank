@@ -2,7 +2,6 @@ package com.bank.controller;
 
 import com.bank.dto.TransactionDto;
 import com.bank.enums.TransactionEnums;
-import com.bank.repository.TransactionsRepository;
 import com.bank.service.TransactionService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -11,7 +10,6 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/")
 public class TransactionController {
 
-    TransactionsRepository transactionsRepository;
     final TransactionService transactionService;
 
     public TransactionController(TransactionService transactionService) {
@@ -24,16 +22,16 @@ public class TransactionController {
     }
 
     @PostMapping("/deposit")
-    public ResponseEntity<Object> deposit(@RequestBody TransactionDto transactionDto, TransactionEnums transactionEnums){
-        return ResponseEntity.ok(this.transactionService.deposit(transactionDto, transactionEnums));
+    public ResponseEntity<Object> deposit(@RequestBody TransactionDto transactionDto){
+        return ResponseEntity.ok(this.transactionService.deposit(transactionDto));
     }
     @PostMapping("/withdraw")
-    public ResponseEntity<Object> withdraw(@RequestBody TransactionDto transactionDto, TransactionEnums transactionEnums){
-        return ResponseEntity.ok(this.transactionService.withdraw(transactionDto, transactionEnums));
+    public ResponseEntity<Object> withdraw(@RequestBody TransactionDto transactionDto){
+        return ResponseEntity.ok(this.transactionService.withdraw(transactionDto, TransactionEnums.WITHDRAW));
     }
     @PostMapping("/transfer")
-    public ResponseEntity<Object> transfer(@RequestBody TransactionDto transactionDto, TransactionEnums transactionEnums){
-        return ResponseEntity.ok(this.transactionService.transfer(transactionDto, transactionEnums));
+    public ResponseEntity<Object> transfer(@RequestBody TransactionDto transactionDto){
+        return ResponseEntity.ok(this.transactionService.transfer(transactionDto, TransactionEnums.TRANSFER));
     }
 
 }

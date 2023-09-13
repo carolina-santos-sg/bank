@@ -23,9 +23,6 @@ public class BankAccount {
     @Column(name = "balance")
     private BigDecimal balance = new BigDecimal("0");
 
-    @Column(name = "transaction_limit")
-    private BigDecimal transactionLimit = new BigDecimal("0");
-
     @JoinColumn(name = "agency_id")
     @OneToOne
     private BankAgency agencyId;

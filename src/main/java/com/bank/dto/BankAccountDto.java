@@ -13,8 +13,6 @@ public class BankAccountDto {
 
     private BigDecimal balance;
 
-    private BigDecimal transactionLimit;
-
     private Long agencyId;
 
     private Long associateId;

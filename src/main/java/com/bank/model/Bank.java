@@ -4,6 +4,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 import java.util.List;
 
 @Entity
@@ -19,6 +20,6 @@ public class Bank {
     @Column(name = "bank_name")
     private String bankName;
 
-//    @OneToMany
-//    List <BankAgency> bankAgencies;
+    @Column(name = "full_balance_transaction")
+    private BigDecimal fullBalanceTransaction;
 }

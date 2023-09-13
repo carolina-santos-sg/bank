@@ -10,14 +10,15 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.lang.annotation.Native;
+import java.math.BigDecimal;
 
 @Repository
 public interface BankAccountRepository extends JpaRepository<BankAccount, Long> {
     @Query(nativeQuery = true,
-                 value = " SELECT COUNT(*) > 0 " +
-                         " FROM  bank_account ba2 " +
-                         " WHERE ba2.number_account = :numberAccount AND ba2.agency_id = :agencyId")
-    boolean countByNumberAccountAndNumberAgency(@Param("numberAccount") Long numberAccount, @Param("agencyId") Long agencyId);
+                 value = " SELECT ba.agency_id " +
+                         " FROM bank_account ba  " +
+                         " WHERE ba.id = :bankAccountId ")
+    Long getBankAgencyByAccountId(@Param("bankAccountId") Long bankAccountId);
 
     @Query (nativeQuery = true,
                   value = " SELECT COUNT(*) > 0 " +
@@ -27,4 +28,9 @@ public interface BankAccountRepository extends JpaRepository<BankAccount, Long> 
                           " WHERE b.bank_number = :bankNumber and associate_id = :associateId")
     boolean countByAssociateAndBank(@Param("bankNumber") long bankNumber, @Param("associateId") long associateId);
 
+    @Query(nativeQuery = true,
+                 value = " SELECT ba.balance " +
+                         " FROM bank_account ba " +
+                         " WHERE ba.id = :accountId ")
+    BigDecimal balanceByAccount(@Param("accountId") long accountId);
 }
